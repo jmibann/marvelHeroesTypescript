@@ -1,24 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+
+import { InputContext } from './context';
+import { ThemeProvider } from "styled-components";
+
+import Header from './components/Header';
+import Landing from './components/Landing';
+import SearchResult from './components/SearchResult';
+import ComicInfo from './components/ComicInfo';
+
+import { fetchRandomHeroes } from './services/API/landing';
+
 import './App.css';
 
-function App() {
+interface Thumbnail {
+  path: string;
+  extension: string;
+}
+
+interface Comic {
+  name: string;
+  resourceURI: string;
+}
+interface Hero {
+  id: number;
+  name: string;
+  thumbnail: Thumbnail;
+  comics: Array<Comic>
+
+}
+
+const App: React.FC = () => {
+  const [inputSearch, setInputSearch] = useState<string>('');
+  const [currentTheme, setCurrentTheme] = useState<string>('light');
+  const [inputSearchComic, setInputSearchComic] = useState<string>('');
+  const [landingHeroes, setLandingHeroes] = useState<Array<Hero>>([]);
+
+  useEffect(() => {
+    const loadHeroes = async () => await fetchRandomHeroes().then((heroes: Hero[]) => setLandingHeroes(heroes));
+
+    loadHeroes();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <ThemeProvider theme={{ mode: currentTheme }}>
+        <InputContext.Provider value={{ input: inputSearch, setInput: setInputSearch, setInputComic: setInputSearchComic }}>
+          <Header currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
+        </InputContext.Provider>
+
+        {!inputSearch.length && !inputSearchComic.length ? <Landing landingHeroes={landingHeroes} /> : null}
+
+        {inputSearch.length && !inputSearchComic.length ? <SearchResult inputSearch={inputSearch} /> : null}
+
+        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null}
+      </ThemeProvider> */}
     </div>
   );
 }
