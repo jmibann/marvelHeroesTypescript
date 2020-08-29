@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import { InputContext } from './context';
-import { ThemeProvider } from "styled-components";
+// import { InputContext } from './context';
+// import { ThemeProvider } from "styled-components";
 
-import Header from './components/Header';
-import Landing from './components/Landing';
-import SearchResult from './components/SearchResult';
-import ComicInfo from './components/ComicInfo';
+// import Header from './components/Header';
+// import Landing from './components/Landing';
+// import SearchResult from './components/SearchResult';
+// import ComicInfo from './components/ComicInfo';
 
 import { fetchRandomHeroes } from './services/API/landing';
 
