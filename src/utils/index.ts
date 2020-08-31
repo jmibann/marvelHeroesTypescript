@@ -2,15 +2,18 @@ import CryptoJS from 'crypto-js';
 
 import { API_KEY, PRIV_KEY } from '../services/config/index';
 
-interface HashObj {
+export const HERO_ID_PREFIX: string = 'HERO_ID_PREFIX';
+
+const MONTH: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dic'];
+export interface HashObj {
   ts: number;
-  hashString: string;
+  hashWord: string;
 }
 
-export const generateHash = () => {
+export const generateHash = () : HashObj => {  
   const ts = new Date().getTime();
   let hash = CryptoJS.MD5(ts + PRIV_KEY + API_KEY);
-  let hashString = hash.toString(CryptoJS.enc.Hex);
+  let hashWord = hash.toString(CryptoJS.enc.Hex);
 
-  return { ts, hashString }
+  return { ts, hashWord }
 };

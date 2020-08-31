@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-// import { InputContext } from './context';
-// import { ThemeProvider } from "styled-components";
+import { InputContext } from './context';
+import { ThemeProvider } from "styled-components";
 
-// import Header from './components/Header';
+import Header from './components/Header';
 // import Landing from './components/Landing';
 // import SearchResult from './components/SearchResult';
 // import ComicInfo from './components/ComicInfo';
@@ -21,7 +21,7 @@ interface Comic {
   name: string;
   resourceURI: string;
 }
-interface Hero {
+export interface Hero {
   id: number;
   name: string;
   thumbnail: Thumbnail;
@@ -31,9 +31,9 @@ interface Hero {
 
 const App: React.FC = () => {
   const [inputSearch, setInputSearch] = useState<string>('');
+  const [landingHeroes, setLandingHeroes] = useState<Hero[]>([]);
   const [currentTheme, setCurrentTheme] = useState<string>('light');
   const [inputSearchComic, setInputSearchComic] = useState<string>('');
-  const [landingHeroes, setLandingHeroes] = useState<Array<Hero>>([]);
 
   useEffect(() => {
     const loadHeroes = async () => await fetchRandomHeroes().then((heroes: Hero[]) => setLandingHeroes(heroes));
@@ -43,17 +43,17 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {/* <ThemeProvider theme={{ mode: currentTheme }}>
+      <ThemeProvider theme={{ mode: currentTheme }}>
         <InputContext.Provider value={{ input: inputSearch, setInput: setInputSearch, setInputComic: setInputSearchComic }}>
           <Header currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
         </InputContext.Provider>
 
-        {!inputSearch.length && !inputSearchComic.length ? <Landing landingHeroes={landingHeroes} /> : null}
+        {/* {!inputSearch.length && !inputSearchComic.length ? <Landing landingHeroes={landingHeroes} /> : null}
 
         {inputSearch.length && !inputSearchComic.length ? <SearchResult inputSearch={inputSearch} /> : null}
 
-        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null}
-      </ThemeProvider> */}
+        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null} */}
+      </ThemeProvider>
     </div>
   );
 }
