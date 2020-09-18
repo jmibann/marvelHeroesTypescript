@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-const getWidthString = (span: number) : (string | null) => {
+const getWidthString = (span: string) : (string | null) => {
   if (!span) return null;
 
-  let width = 100 * (span / 12);
+  let width = 100 * (parseInt(span) / 12);
 
   return `width: ${width}%`;
 }
@@ -16,11 +16,11 @@ export const Row = styled.div`
 `;
 
 interface DivProps{
-  backGround: string;
-  xs: number;
-  sm: number;
-  md: number;
-  lg: number;
+  backGround?: string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
 };
 
 export const Column = styled.div<DivProps>`

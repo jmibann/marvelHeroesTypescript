@@ -6,6 +6,7 @@ interface ModalProps {
   modalSize: string;
 }
 
+
 export const StyledModal = styled.div<ModalProps>`
   position: fixed;
   top: 50%;

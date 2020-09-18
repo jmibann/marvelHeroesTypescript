@@ -6,13 +6,12 @@ import { StyledModal, Button } from "./styles";
 const modalRoot = document.getElementById("modal-root");
 
 interface Props {
-  children: () => {};
+  size?: number;
   isOpen: boolean;
-  onClose: () => {};
-  id: number;
-  size: number;
-  title: string;
-
+  id: number | string;
+  title: string | null | undefined;
+  onClose: () => void;
+  children: React.ReactNode;
 }
 
 
@@ -35,20 +34,20 @@ const Modal: React.FC<Props> = ({isOpen, onClose, title, id, size, children}) =>
     setFadeType('out');
   }, [isOpen]);
 
-  const transitionEnd = e => {
+  const transitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
     if (e.propertyName !== "opacity" || fadeType === "in") return;
     if (fadeType === "out") {
       onClose();
     }
   };
 
-  const onEscKeyDown = e => {
+  const onEscKeyDown = (e: KeyboardEvent) => {
     if (e.key !== "Escape") return;
     setFadeType("out");
     onClose();
   };
 
-  const handleClick = e => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setFadeType("out");
     onClose();

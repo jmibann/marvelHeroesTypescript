@@ -12,7 +12,7 @@ interface Props {
   onClick: (item: Hero) => void;
 };
 
-function Card ({hero, onClick}: Props) : React.ReactNode {
+function Card ({hero, onClick}: Props) : (JSX.Element) {
 
   const [isFav, setIsFav] = useState<boolean>(false);
 
