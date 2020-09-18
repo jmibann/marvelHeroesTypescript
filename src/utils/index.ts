@@ -17,3 +17,18 @@ export const generateHash = () : HashObj => {
 
   return { ts, hashWord }
 };
+
+export const dateFormatter = (str: string) : string => {
+  let numbers = str.split('T');
+  numbers = numbers[0].split('-');
+
+  const year = numbers[0];
+  const month = parseInt(numbers[1]) - 1;
+  const day = numbers[2];
+
+  return `${MONTH[month]} ${day}, ${year}`;
+}
+
+export const buildKey = (id: number) : string => {
+  return `HERO_ID_PREFIX_${id}`;
+}
