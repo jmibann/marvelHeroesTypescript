@@ -6,19 +6,20 @@ import { StyledModal, Button } from "./styles";
 const modalRoot = document.getElementById("modal-root");
 
 interface Props {
-  size?: number;
+  size?: string;
   isOpen: boolean;
   id: number | string;
   title: string | null | undefined;
   onClose: () => void;
   children: React.ReactNode;
+  class?: string | undefined;
 }
 
 
-const Modal: React.FC<Props> = ({isOpen, onClose, title, id, size, children}) => {
-
-  const [fadeType, setFadeType] = useState<string|null>(null);
-  const background = React.createRef<React.RefObject<HTMLDivElement | null>>();
+const Modal: React.FC<Props> = (props) => {
+  const {isOpen, onClose, title, id, size, children} = props;
+  const [fadeType, setFadeType] = useState<string>();
+  const background = React.createRef();
 
   useEffect(() => {
     window.addEventListener("keydown", onEscKeyDown, false);
@@ -47,7 +48,7 @@ const Modal: React.FC<Props> = ({isOpen, onClose, title, id, size, children}) =>
     onClose();
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     setFadeType("out");
     onClose();
@@ -57,13 +58,14 @@ const Modal: React.FC<Props> = ({isOpen, onClose, title, id, size, children}) =>
   return (
     ReactDom.createPortal(
       <StyledModal
-        id={id}
+        id={id as string}
         className={`wrapper ${props.class}`}
         role="dialog"
         modalSize={size}
         onTransitionEnd={transitionEnd}
         fadeType={fadeType}
       >
+        <div></div>
         <div className="box-dialog">
           <div className="box-header">
             <h4 className="box-title">{title}</h4>
@@ -76,7 +78,7 @@ const Modal: React.FC<Props> = ({isOpen, onClose, title, id, size, children}) =>
         <div
           className={`background`}
           onMouseDown={handleClick}
-          ref={background}
+          ref={background as React.RefObject<HTMLDivElement>}
         />
       </StyledModal>,
       modalRoot as HTMLElement

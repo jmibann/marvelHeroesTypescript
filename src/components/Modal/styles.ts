@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { backgroundColor, textColor, themeButton } from '../../common/theme';
 
 interface ModalProps {
-  modalSize: string;
+  modalSize: string | undefined;
+  fadeType?: string | undefined;
 }
 
 
@@ -15,8 +16,27 @@ export const StyledModal = styled.div<ModalProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
-  transition: opacity linear 0.15s;
+  /* opacity: 1;
+  transition: opacity linear 0.15s; */
+  opacity: ${props => {
+    switch (props.fadeType) {
+      case "in":
+        return "1";
+      default:
+        return "0";
+    };
+  }};
+  transition: ${props => {
+    switch (props.fadeType) {
+      case "in":
+        return `opacity linear 0.25s;`;
+      case "out":
+        return `opacity linear 0.25s;`;
+      default:
+        return "";
+    }
+  }};
+
   z-index: 2000;
   overflow-y: hidden;
   width: ${props => {
