@@ -4,9 +4,9 @@ import { InputContext } from './context';
 import { ThemeProvider } from "styled-components";
 
 import Header from './components/Header';
-// import Landing from './components/Landing';
+import Landing from './components/Landing';
 // import SearchResult from './components/SearchResult';
-// import ComicInfo from './components/ComicInfo';
+import ComicInfo from './components/ComicInfo';
 
 import { fetchRandomHeroes } from './services/API/landing';
 
@@ -48,11 +48,11 @@ const App: React.FC = () => {
           <Header currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
         </InputContext.Provider>
 
-        {/* {!inputSearch.length && !inputSearchComic.length ? <Landing landingHeroes={landingHeroes} /> : null}
+        {!inputSearch.length && !inputSearchComic.length ? <Landing landingHeroes={landingHeroes} /> : null}
 
-        {inputSearch.length && !inputSearchComic.length ? <SearchResult inputSearch={inputSearch} /> : null}
+        {/* {inputSearch.length && !inputSearchComic.length ? <SearchResult inputSearch={inputSearch} /> : null} */}
 
-        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null} */}
+        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null}
       </ThemeProvider>
     </div>
   );

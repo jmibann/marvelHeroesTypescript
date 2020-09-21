@@ -18,14 +18,14 @@ export interface ComicInfo {
   title: string;
   description: string;
   thumbnail: {
-      extesion: string;
-      path: string;
-  }
+    extesion: string;
+    path: string;
+  };
 };
 
-const ComicReview: React.FC<Props> = ({comic}) => {
+const ComicReview: React.FC<Props> = ({ comic }) => {
 
-  const [selectedComic, setSelectedComic] = useState<ComicInfo | null >(null);
+  const [selectedComic, setSelectedComic] = useState<ComicInfo | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -39,10 +39,10 @@ const ComicReview: React.FC<Props> = ({comic}) => {
     );
 
     loadComic();
-  
+
     return () => {
       isMounted = false;
-       return;
+      return;
     };
   }, [comic.resourceURI]);
 
