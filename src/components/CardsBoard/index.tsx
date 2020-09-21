@@ -36,9 +36,9 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
 
   const modalBodyChildren = (): React.ReactNode => {
     if (isEmptyComicList) {
-      return <NoComicFound> <h2>No comic found</h2> </NoComicFound>
+      return selectedHero?.comics.map((comic, idx) => <ComicReview comic={comic} key={`${idx} - ${comic.name}`} />)
     } else {
-      return (selectedHero as Hero).comics.map((comic, idx) => <ComicReview comic={comic} key={`${idx} - ${comic.name}`} />)
+      return <NoComicFound> <h2>No comic found</h2> </NoComicFound>
     }
   }
 
@@ -46,7 +46,7 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
     <CardsContainer>
       <Row>
         {isModalOpen && (
-          <Modal id="modal" isOpen={isModalOpen} onClose={closeModal} title={selectedHero && selectedHero.name}>
+          <Modal id="modal" isOpen={isModalOpen} onClose={closeModal} title={selectedHero?.name}>
             {modalBodyChildren()}
           </Modal>
         )}
