@@ -7,10 +7,11 @@ import Card from '../Card/';
 import Modal from '../Modal';
 import ComicReview from '../ComicReview';
 
-import {Hero} from '../../App'; 
+import { Hero } from '../../App';
+import { ReceivedHeroes } from '../SearchResult';
 
 interface Props {
-  heroes: Array<Hero>
+  heroes: Array<Hero> | Array<ReceivedHeroes>;
 }
 
 const CardsBoard: React.FC<Props> = ({ heroes }) => {
@@ -33,10 +34,10 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
     openModal();
   }
 
-  const modalBodyChildren = () : React.ReactNode => {
-    if (isEmptyComicList){
+  const modalBodyChildren = (): React.ReactNode => {
+    if (isEmptyComicList) {
       return <NoComicFound> <h2>No comic found</h2> </NoComicFound>
-    }else {
+    } else {
       return (selectedHero as Hero).comics.map((comic, idx) => <ComicReview comic={comic} key={`${idx} - ${comic.name}`} />)
     }
   }
@@ -48,9 +49,9 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
           <Modal id="modal" isOpen={isModalOpen} onClose={closeModal} title={selectedHero && selectedHero.name}>
             {modalBodyChildren()}
           </Modal>
-        )} 
+        )}
         {
-          heroes.map(hero =>
+          heroes && heroes.map(hero =>
             <Column xs='12' sm='6' md='4' lg='3' key={hero.id}>
               <Card hero={hero} onClick={onClick} />
             </Column>
