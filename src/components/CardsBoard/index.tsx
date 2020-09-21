@@ -8,15 +8,14 @@ import Modal from '../Modal';
 import ComicReview from '../ComicReview';
 
 import { Hero } from '../../App';
-import { ReceivedHeroes } from '../SearchResult';
 
 interface Props {
-  heroes: Array<Hero> | Array<ReceivedHeroes>;
+  heroes: Array<Hero>;
 }
 
 const CardsBoard: React.FC<Props> = ({ heroes }) => {
   const [isEmptyComicList, setIsEmptyComicList] = useState<boolean>(true);
-  const [selectedHero, setSelectedHero] = useState<Hero>();
+  const [selectedHero, setSelectedHero] = useState<(Hero)>();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -28,15 +27,16 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
     setSelectedHero(undefined);
   }
 
-  const onClick = (selectedHero: Hero) => {
+  const onClick = (selectedHero: (Hero)) => {
     setSelectedHero(selectedHero);
     setIsEmptyComicList(selectedHero.comics.length ? true : false);
     openModal();
   }
 
   const modalBodyChildren = (): React.ReactNode => {
+
     if (isEmptyComicList) {
-      return selectedHero?.comics.map((comic, idx) => <ComicReview comic={comic} key={`${idx} - ${comic.name}`} />)
+      return selectedHero?.comics?.map((comic, idx) => <ComicReview comic={comic} key={`${idx} - ${comic.name}`} />)
     } else {
       return <NoComicFound> <h2>No comic found</h2> </NoComicFound>
     }

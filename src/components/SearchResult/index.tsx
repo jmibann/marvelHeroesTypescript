@@ -5,30 +5,16 @@ import CardsBoard from '../CardsBoard';
 import { fetchSearchResult } from '../../services/API/searchResult';
 import { TitleContainer } from './styles';
 
+import {Hero} from '../../App';
+
 
 interface Props {
   inputSearch: string;
 };
 
-interface HeroComics {
-  name: string;
-  resourceURI: string;
-};
-
-export interface ReceivedHeroes {
-  id: number;
-  name: string;
-  thumbnail: {
-    extension: string;
-    path: string;
-  };
-  comics: HeroComics[];
-}
-
-
 const SearchResult: React.FC<Props> = ({ inputSearch }) => {
 
-  const [searchResult, setSearchResult] = useState<ReceivedHeroes[]>();
+  const [searchResult, setSearchResult] = useState<Hero[]>();
 
   useEffect(() => {
     let isMounted = true;

@@ -25,8 +25,7 @@ export interface Hero {
   id: number;
   name: string;
   thumbnail: Thumbnail;
-  comics: Array<Comic>
-
+  comics: Array<Comic>;
 }
 
 const App: React.FC = () => {
