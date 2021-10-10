@@ -72,7 +72,7 @@ export const StyledModal = styled.div<ModalProps>`
     width: 100%;
     height: 475px;
     border-radius: 10px;
-    background-color: ${ () => backgroundColor};
+    background-color: ${() => backgroundColor};
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     .box-content {
       padding:  0 24px 0 24px; 
@@ -81,7 +81,7 @@ export const StyledModal = styled.div<ModalProps>`
       overflow-y: scroll;
       overflow: -moz-scrollbars-vertical; 
       margin-right: 5px;
-      color: ${ () => textColor};
+      color: ${() => textColor};
     }
     .box-header {
       height: 48px;
@@ -89,7 +89,7 @@ export const StyledModal = styled.div<ModalProps>`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      color: ${ () => textColor};
+      color: ${() => textColor};
       .box-title {
         font-size: 24px;
         font-weight: 400;
@@ -100,7 +100,7 @@ export const StyledModal = styled.div<ModalProps>`
         line-height: 35px;
         font-weight: 400;
         text-shadow: none;
-        color: ${ () => textColor};
+        color: ${() => textColor};
         border-width: 0px;
         cursor: pointer;
         &:hover {
@@ -128,7 +128,7 @@ export const StyledModal = styled.div<ModalProps>`
 export const Button = styled.button`
   font: 400 24px system-ui;
   border-width: 0px;
-  background-color: ${ () => themeButton};
-  color: ${ () => textColor};
+  background-color: ${() => themeButton};
+  color: ${() => textColor};
 `;
 

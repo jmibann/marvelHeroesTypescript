@@ -5,9 +5,6 @@ export const LogoContainer = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  /* background-color: red; */
-  /* height: 50px;
-  width: 120px; */
   padding-left: 20px;
   padding-right: 20px;
   &:hover {

@@ -6,64 +6,13 @@ import { dateFormatter } from '../../utils';
 import { Container, Image, Details, Title, Miscelaneous, Description } from './styles';
 import { Row, Column } from '../../common';
 
-interface Props {
+import { getWriter, getPenciler, getCoverArtist, ComicInfoFromFetch } from '../../utils';
+
+type ComicInfoComponentProps = {
   comicId: string;
 };
 
-interface Date {
-  date: string;
-  type: string;
-};
-
-interface CreatorItem {
-  name: string;
-  resourceURI: string;
-  role: string;
-}
-
-export interface ComicInfoFromFetch {
-  title: string;
-  description: string;
-  thumbnail: {
-    extesion: string;
-    path: string;
-  };
-  dates: Date[];
-  creators: {
-    items: CreatorItem[];
-  };
-};
-
-const getWriter = (comicInfo: ComicInfoFromFetch): (string[] | undefined) => {
-  const result = comicInfo?.creators?.items.filter(creator => creator.role === 'writer');
-  if (result) {
-    return result.map(writer => writer.name);
-  } else {
-    return
-  };
-};
-
-const getPenciler = (comicInfo: ComicInfoFromFetch): (string[] | undefined) => {
-  const result = comicInfo?.creators?.items.filter(creator => creator.role.includes('penciler'));
-  if (result) {
-    result.map(writer => writer.name);
-  }
-  else {
-    return
-  }
-};
-
-const getCoverArtist = (comicInfo: ComicInfoFromFetch): (string[] | undefined) => {
-  const result = comicInfo?.creators?.items.filter(creator => (creator.role.includes('cover') && creator.role.includes('penciler')));
-  if (result) {
-    result.map(writer => writer.name);
-  }
-  else {
-    return
-  }
-};
-
-const ComicInfoComponent: React.FC<Props> = ({ comicId }) => {
+const ComicInfoComponent: React.FC<ComicInfoComponentProps> = ({ comicId }) => {
 
   const [comicInfo, setComicInfo] = useState<ComicInfoFromFetch>();
 
@@ -91,9 +40,13 @@ const ComicInfoComponent: React.FC<Props> = ({ comicId }) => {
             <Miscelaneous>Published: {dateFormatter(comicInfo.dates[0].date)}</Miscelaneous>
             <Miscelaneous>Writer: {getWriter(comicInfo)?.join(' - ')}</Miscelaneous>
 
-            {getPenciler(comicInfo) && <Miscelaneous>Penciler: {getPenciler(comicInfo)?.join(' - ')}</Miscelaneous>}
+            {getPenciler(comicInfo) &&
+              <Miscelaneous>Penciler: {getPenciler(comicInfo)?.join(' - ')}</Miscelaneous>
+            }
 
-            {getCoverArtist(comicInfo)?.length && <Miscelaneous>Cover Artist: {getCoverArtist(comicInfo)?.join(' - ')}</Miscelaneous>}
+            {getCoverArtist(comicInfo)?.length &&
+              <Miscelaneous>Cover Artist: {getCoverArtist(comicInfo)?.join(' - ')}</Miscelaneous>
+            }
 
             <Description>{comicInfo.description}</Description>
           </Details>

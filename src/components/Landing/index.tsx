@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import CardsBoard from '../CardsBoard';
-import { Hero } from '../../App';
+import { CardsBoard, LoadingHeroes } from '../../components';
 
-interface Props {
-  landingHeroes: Hero[];
-}
+import { HeroResourceType } from '../../App';
 
-const Landing: React.FC<Props> = ({ landingHeroes }) => {
+type LandingProps = {
+  randomHeroesResource: HeroResourceType;
+};
 
-  return <CardsBoard heroes={landingHeroes} />
+const Landing: React.FC<LandingProps> = ({ randomHeroesResource }) => {
+  return (
+    <Suspense fallback={<LoadingHeroes />}>
+      <CardsBoard heroes={randomHeroesResource} />
+    </Suspense>
+  )
 }
 
 export default Landing;

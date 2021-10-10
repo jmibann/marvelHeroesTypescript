@@ -6,7 +6,7 @@ interface Props {
   setCurrentTheme: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const EmptyRightDiv: React.FC<Props> = ({ currentTheme, setCurrentTheme }) => {
+const ButtonContainer: React.FC<Props> = ({ currentTheme, setCurrentTheme }) => {
 
   const toogleTheme = () => {
     (currentTheme === 'light') ? setCurrentTheme('dark') : setCurrentTheme('light')
@@ -25,4 +25,4 @@ const EmptyRightDiv: React.FC<Props> = ({ currentTheme, setCurrentTheme }) => {
   )
 }
 
-export default EmptyRightDiv;
+export default ButtonContainer;

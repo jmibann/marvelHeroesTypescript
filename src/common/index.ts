@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const getWidthString = (span: string) : (string | null) => {
+const getWidthString = (span: string): (string | null) => {
   if (!span) return null;
 
   let width = 100 * (parseInt(span) / 12);
@@ -15,7 +15,7 @@ export const Row = styled.div`
   flex-wrap: wrap ;
 `;
 
-interface DivProps{
+interface DivProps {
   backGround?: string;
   xs: string;
   sm: string;
@@ -24,9 +24,6 @@ interface DivProps{
 };
 
 export const Column = styled.div<DivProps>`
-
-  background: ${props => props.backGround ? props.backGround : 'white'};
-
   ${({ xs }) => (xs ? getWidthString(xs) : "width:100%")};
 
   @media only screen and (min-width: 768px){

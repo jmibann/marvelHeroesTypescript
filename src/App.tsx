@@ -1,59 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import './App.css';
 
 import { InputContext } from './context';
 import { ThemeProvider } from "styled-components";
 
-import Header from './components/Header';
-import Landing from './components/Landing';
-import SearchResult from './components/SearchResult';
-import ComicInfo from './components/ComicInfo';
-
+import {
+  Header,
+  Landing,
+  SearchResult,
+  ComicInfo,
+} from './components';
+import { createResource } from './utils';
 import { fetchRandomHeroes } from './services/API/landing';
+import { AppContainer } from './styles';
 
-import './App.css';
-
-interface Thumbnail {
+type ThumbnailType = {
   path: string;
   extension: string;
 }
 
-interface Comic {
+type ComicType = {
   name: string;
   resourceURI: string;
 }
-export interface Hero {
+export type HeroType = {
   id: number;
   name: string;
-  thumbnail: Thumbnail;
-  comics: Array<Comic>;
+  thumbnail: ThumbnailType;
+  comics: Array<ComicType>;
 }
 
-const App: React.FC = () => {
-  const [inputSearch, setInputSearch] = useState<string>('');
-  const [landingHeroes, setLandingHeroes] = useState<Hero[]>([]);
-  const [currentTheme, setCurrentTheme] = useState<string>('light');
-  const [inputSearchComic, setInputSearchComic] = useState<string>('');
+export type HeroResourceType = {
+  read: () => HeroType[] | Promise<HeroType[]>;
+}
 
-  useEffect(() => {
-    const loadHeroes = async () => await fetchRandomHeroes().then((heroes: Hero[]) => setLandingHeroes(heroes));
+const INITIAL_THEME = 'light'
 
-    loadHeroes();
-  }, []);
+const createRandomHeroesResource = () => createResource(fetchRandomHeroes());
+const randomHeroesResource = createRandomHeroesResource();
+
+const App: React.FC<{}> = () => {
+  const [inputSearch, setInputSearch] = useState('');
+  const [currentTheme, setCurrentTheme] = useState(INITIAL_THEME);
+  const [inputSearchComic, setInputSearchComic] = useState('');
+
+  const isSearchingNothing = Boolean(!inputSearch.length && !inputSearchComic.length);
+  const isSearchingHero = Boolean(inputSearch.length && !inputSearchComic.length);
+  const isSearchingComic = Boolean(inputSearch && inputSearchComic);
+
+  const inputContextValue = {
+    input: inputSearch,
+    setInput: setInputSearch,
+    setInputComic: setInputSearchComic
+  };
 
   return (
-    <div className="App">
-      <ThemeProvider theme={{ mode: currentTheme }}>
-        <InputContext.Provider value={{ input: inputSearch, setInput: setInputSearch, setInputComic: setInputSearchComic }}>
+    <ThemeProvider theme={{ mode: currentTheme }}>
+      <AppContainer>
+        <InputContext.Provider value={inputContextValue}>
           <Header currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
         </InputContext.Provider>
 
-        {!inputSearch.length && !inputSearchComic.length && <Landing landingHeroes={landingHeroes} />}
+        {isSearchingNothing && <Landing randomHeroesResource={randomHeroesResource} />}
 
-        {inputSearch.length && !inputSearchComic.length && <SearchResult inputSearch={inputSearch} />}
+        {isSearchingHero && <SearchResult inputSearch={inputSearch} />}
 
-        {(inputSearch && inputSearchComic) ? <ComicInfo comicId={inputSearchComic} /> : null}
-      </ThemeProvider>
-    </div>
+        {isSearchingComic && <ComicInfo comicId={inputSearchComic} />}
+
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 

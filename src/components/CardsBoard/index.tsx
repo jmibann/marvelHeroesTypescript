@@ -2,32 +2,31 @@ import React, { useState } from 'react';
 import { Row, Column } from '../../common';
 
 import { CardsContainer, NoComicFound } from './styles';
+import { Card, Modal, ComicReview } from '../../components';
 
-import Card from '../Card/';
-import Modal from '../Modal';
-import ComicReview from '../ComicReview';
+import { HeroType } from '../../App';
 
-import { Hero } from '../../App';
-
-interface Props {
-  heroes: Array<Hero>;
+type CardsBoardProps = {
+  heroes: {
+    read: () => HeroType[] | Promise<HeroType[]>;
+  }
 }
 
-const CardsBoard: React.FC<Props> = ({ heroes }) => {
-  const [isEmptyComicList, setIsEmptyComicList] = useState<boolean>(true);
-  const [selectedHero, setSelectedHero] = useState<(Hero)>();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+const CardsBoard: React.FC<CardsBoardProps> = ({ heroes }) => {
+  const heroesList = heroes.read() as HeroType[];
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  }
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedHero, setSelectedHero] = useState<(HeroType)>();
+  const [isEmptyComicList, setIsEmptyComicList] = useState<boolean>(true);
+
+  const openModal = () => setIsModalOpen(true);
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedHero(undefined);
   }
 
-  const onClick = (selectedHero: (Hero)) => {
+  const onClick = (selectedHero: (HeroType)) => {
     setSelectedHero(selectedHero);
     setIsEmptyComicList(selectedHero.comics.length ? true : false);
     openModal();
@@ -51,7 +50,7 @@ const CardsBoard: React.FC<Props> = ({ heroes }) => {
           </Modal>
         )}
         {
-          heroes && heroes.map(hero =>
+          heroesList && heroesList.map(hero =>
             <Column xs='12' sm='6' md='4' lg='3' key={hero.id}>
               <Card hero={hero} onClick={onClick} />
             </Column>

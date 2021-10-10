@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { textColor } from '../../../common/theme';
-
 export const EmptyDiv = styled.div`
   width: 120px;
   height: 50px;
@@ -13,7 +11,8 @@ export const EmptyDiv = styled.div`
 export const Button = styled.button`
   height: 25px;
   font-weight: bold;
-  color:${ () => textColor};
+  color:'white';
   border-color: rgb(255, 23, 37);
   background-color: rgb(255, 23, 37);
+  border-radius: 4px;
 `

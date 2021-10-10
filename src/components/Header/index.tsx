@@ -3,11 +3,11 @@ import { HeaderContainer } from './styles';
 
 import Logo from './Logo';
 import SearchBarComponent from './SearchBar';
-import EmptyRigthDiv from './EmptyRightDiv';
+import ButtonContainer from './ButtonContainer';
 
 interface Props {
   currentTheme: string;
-  setCurrentTheme : React.Dispatch<React.SetStateAction<string>>
+  setCurrentTheme: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Header: React.FC<Props> = ({ currentTheme, setCurrentTheme }) => {
@@ -16,7 +16,7 @@ const Header: React.FC<Props> = ({ currentTheme, setCurrentTheme }) => {
     <HeaderContainer>
       <Logo />
       <SearchBarComponent />
-      <EmptyRigthDiv currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
+      <ButtonContainer currentTheme={currentTheme} setCurrentTheme={setCurrentTheme} />
     </HeaderContainer>
   )
 }

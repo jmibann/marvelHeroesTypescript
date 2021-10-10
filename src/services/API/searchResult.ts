@@ -1,7 +1,7 @@
 import { API_KEY, get } from '../config/index';
 import { generateHash } from '../../utils';
 
-import { Hero } from '../../App';
+import { HeroType } from '../../App';
 
 const searchHeroesURI = '/characters?nameStartsWith=';
 
@@ -10,8 +10,8 @@ const createSearchURL = (input: string) => {
   return searchHeroesURI + input.toLowerCase() + '&orderBy=name&apikey=' + API_KEY + "&ts=" + ts + "&hash=" + hashWord;
 }
 
-const transformToHeroType = (array: any) : Hero[] => {
-  return array.map((item: any) : Hero => ({
+const transformToHeroType = (array: any): HeroType[] => {
+  return array.map((item: any): HeroType => ({
     id: item.id,
     name: item.name,
     thumbnail: item.thumbnail,
@@ -19,7 +19,7 @@ const transformToHeroType = (array: any) : Hero[] => {
   }))
 }
 
-export const fetchSearchResult = (input: string): Promise<Hero[]> => {
+export const fetchSearchResult = (input: string): Promise<HeroType[]> => {
 
   const searchURL = createSearchURL(input);
 

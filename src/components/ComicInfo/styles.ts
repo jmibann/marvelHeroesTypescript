@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
+import { textColor } from '../../common/theme';
+
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(247, 248, 250);
   padding-left: 74px;
   padding-right: 74px;
   padding-top: 58px;
-`;
+  `;
 
 export const Image = styled.img`
   border-radious: 10px;
@@ -20,8 +21,8 @@ export const Details = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: rgb(247, 248, 250);
   padding-top: 58px;
+  color: ${() => textColor};
 
   @media only screen and (max-width: 768px){
     align-items: center;

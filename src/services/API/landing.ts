@@ -1,13 +1,13 @@
 import { API_KEY, LIMIT, get } from '../config/index';
 
 import { generateHash, HashObj } from '../../utils/index';
-import {Hero} from '../../App';
+import { HeroType } from '../../App';
 
 const HEROES_QTY = 8;
 const RandomHeroesURL = '/characters?modifiedSince=1990&orderBy=name&limit=' + LIMIT;
 
-const getRandomIndexes = (quantity: number) : number[] => {
-  let array: number[]= [];
+const getRandomIndexes = (quantity: number): number[] => {
+  let array: number[] = [];
 
   for (let i = 0; array.length < quantity; i++) {
     let randomIndex = Math.floor(Math.random() * 100);
@@ -18,12 +18,12 @@ const getRandomIndexes = (quantity: number) : number[] => {
   return array
 }
 
-const createRandomHeroQueryURL = () : string => {
+const createRandomHeroQueryURL = (): string => {
   let Hash: HashObj = generateHash();
   return RandomHeroesURL + '&apikey=' + API_KEY + "&ts=" + Hash.ts + "&hash=" + Hash.hashWord;
 }
 
-const selectRandomHeroes = (heroesArray: any, quantity: number ) : Hero[] => {
+const selectRandomHeroes = (heroesArray: any, quantity: number): HeroType[] => {
   let randomIndexes = getRandomIndexes(quantity);
 
   return randomIndexes.map(index => ({
@@ -35,7 +35,7 @@ const selectRandomHeroes = (heroesArray: any, quantity: number ) : Hero[] => {
   )
 }
 
-export const fetchRandomHeroes = () : Promise<Hero[]> => {
+export const fetchRandomHeroes = (): Promise<HeroType[]> => {
 
   const RandomHeroQueryURL = createRandomHeroQueryURL();
 

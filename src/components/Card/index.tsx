@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
 import { CardComponent, HeroImage, Name, Star, ImageFrame } from './styles';
 
 import { buildKey } from '../../utils';
-import {Hero} from '../../App';
+import { HeroType } from '../../App';
 
 const myStorage = window.localStorage;
 
 interface Props {
-  hero: Hero ;
-  onClick: (item: Hero) => void;
+  hero: HeroType;
+  onClick: (item: HeroType) => void;
 };
 
-function Card ({hero, onClick}: Props) : (JSX.Element) {
+function Card({ hero, onClick }: Props): (JSX.Element) {
 
   const [isFav, setIsFav] = useState<boolean>(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
 
   useEffect(() => {
     if (myStorage.getItem(buildKey(hero.id))) setIsFav(true);
@@ -24,7 +28,7 @@ function Card ({hero, onClick}: Props) : (JSX.Element) {
 
   // myStorage.clear();
 
-  const saveAsFav = (e: React.MouseEvent<HTMLElement, MouseEvent>) : void => {
+  const saveAsFav = (e: React.MouseEvent<HTMLElement, MouseEvent>): void => {
     e.stopPropagation();
     if (!myStorage.getItem(buildKey(id))) {
       myStorage.setItem(buildKey(id), name);
@@ -32,7 +36,7 @@ function Card ({hero, onClick}: Props) : (JSX.Element) {
     }
   }
 
-  const removeAsFav = (e: React.MouseEvent<HTMLElement, MouseEvent>) : void  => {
+  const removeAsFav = (e: React.MouseEvent<HTMLElement, MouseEvent>): void => {
     e.stopPropagation();
     if (myStorage.getItem(buildKey(id))) {
       myStorage.removeItem(buildKey(id));
@@ -40,22 +44,30 @@ function Card ({hero, onClick}: Props) : (JSX.Element) {
     }
   }
 
-  const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) : (void | undefined)  => {
-    e.preventDefault();
-    // e.target.onerror  = null;
-    // e.target.src = './imageNotFoundFantastic.png'
-    e.currentTarget.onerror = null;
-    e.currentTarget.src = './imageNotFoundFantastic.png'
+  const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>): (void | undefined) => {
+    if (!errored) {
+      e.preventDefault();
+      setErrored(true);
+      e.currentTarget.onerror = null;
+      e.currentTarget.src = './imageNotFoundFantastic.png'
+    }
   }
 
   return (
     <CardComponent>
       <ImageFrame onClick={() => onClick(hero)} >
-        <HeroImage src={thumbnail.path + '/portrait_fantastic.jpg'} onError={addDefaultSrc}/>
-        <Star>
+        <HeroImage
+          src={thumbnail.path + '/portrait_fantastic.jpg'}
+          onError={addDefaultSrc}
+          onLoad={() => setIsImageLoaded(true)}
+        />
+
+        {!isImageLoaded && <Skeleton width={"256px"} height={"384px"} />}
+
+        <Star onClick={isFav ? removeAsFav : saveAsFav}>
           {isFav
-            ? <i className="fas fa-star" onClick={removeAsFav}></i>
-            : <i className="far fa-star" onClick={saveAsFav}></i>
+            ? <AiFillStar />
+            : <AiOutlineStar />
           }
         </Star>
         <Name>{name.toUpperCase()}</Name>

@@ -1,7 +1,7 @@
 
 import { API_KEY, get } from '../config/index';
 import { generateHash } from '../../utils';
-import { ComicInfoFromFetch } from '../../components/ComicInfo';
+import { ComicInfoFromFetch } from '../../utils/index';
 
 const comicURI = '/comics/'
 
@@ -14,4 +14,4 @@ export const fetchComic = (id: (number | string)): Promise<ComicInfoFromFetch> =
   const comicQueryURL = createComicQueryURL(id);
 
   return get(comicQueryURL).then(res => res.data.data.results[0])
-} 
+}

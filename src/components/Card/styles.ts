@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 
-import { backgroundColor } from '../../common/theme';
-
 export const CardComponent = styled.div`
     padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${ () => backgroundColor};
     `;
 
 export const ImageFrame = styled.div`
     position: relative;
+    transition: transform .2s;
+    &:hover {
+        transform: scale(1.1);
 `;
 
 export const HeroImage = styled.img`
     width: 256px;
     border-radius: 10px;
+    cursor: pointer;
     `;
 
 export const Name = styled.p`
@@ -27,6 +28,7 @@ export const Name = styled.p`
     color: white;
     font-weight: bold;
     position: absolute;
+    cursor: pointer;
 `
 
 export const Star = styled.p`

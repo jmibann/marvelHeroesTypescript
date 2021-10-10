@@ -11,7 +11,6 @@ const Logo: React.FC<{}> = () => {
 
   return (
     <LogoContainer onClick={() => setInput('')}>
-      {/* <img src={marvelLogo}  /> */}
       <LogoImage src={marvelLogo} />
     </LogoContainer>
   )

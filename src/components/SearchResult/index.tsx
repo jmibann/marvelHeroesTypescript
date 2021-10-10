@@ -1,32 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 
-import CardsBoard from '../CardsBoard';
+import { CardsBoard, LoadingHeroes } from '../../components';
 
+import { createResource } from '../../utils';
 import { fetchSearchResult } from '../../services/API/searchResult';
-import { TitleContainer } from './styles';
+import { TitleContainer, SearchContainer } from './styles';
+import { HeroType } from '../../App';
 
-import {Hero} from '../../App';
-
-
-interface Props {
+type SearchResultProps = {
   inputSearch: string;
 };
 
-const SearchResult: React.FC<Props> = ({ inputSearch }) => {
+type ResultType = {
+  read: () => HeroType[] | Promise<HeroType[]>;
+}
 
-  const [searchResult, setSearchResult] = useState<Hero[]>();
+const createSearchHeroesResource =
+  (keyword: string) => createResource(fetchSearchResult(keyword));;
+
+const SearchResult: React.FC<SearchResultProps> = ({ inputSearch }) => {
+  const [searchResult, setSearchResult] = useState<ResultType>();
 
   useEffect(() => {
     let isMounted = true;
-    const loadSearchResult = async (input: string) => await fetchSearchResult(input).then(result => {
-      if (isMounted) {
-        setSearchResult(result);
-      } else {
-        return;
-      }
-    })
 
-    loadSearchResult(inputSearch);
+    // const loadSearchResult =
+    //   async (input: string) => await fetchSearchResult(input)
+    //     .then(result => {
+    //       if (isMounted) {
+    //         setSearchResult(result);
+    //       } else {
+    //         return;
+    //       }
+    //     })
+
+    // loadSearchResult(inputSearch);
+
+    if (isMounted) {
+      setSearchResult(createSearchHeroesResource(inputSearch));
+    } else {
+      return;
+    }
 
     return () => {
       isMounted = false;
@@ -35,11 +49,16 @@ const SearchResult: React.FC<Props> = ({ inputSearch }) => {
   }, [inputSearch])
 
   return (
-    <div>
+    <SearchContainer>
       <TitleContainer> Results: {inputSearch} </TitleContainer>
 
-      {searchResult && <CardsBoard heroes={searchResult} />}
-    </div>
+      {
+        searchResult &&
+        <Suspense fallback={<LoadingHeroes />}>
+          <CardsBoard heroes={searchResult} />
+        </Suspense>}
+
+    </SearchContainer>
   )
 }
 
