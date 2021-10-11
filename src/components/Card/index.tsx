@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
-import { CardComponent, HeroImage, Name, Star, ImageFrame } from './styles';
+import {
+  CardComponent,
+  HeroImage,
+  Name,
+  Star,
+  ImageFrame,
+} from './styles';
 
 import { buildKey } from '../../utils';
 import { HeroType } from '../../App';

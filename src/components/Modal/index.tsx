@@ -5,7 +5,7 @@ import { StyledModal, Button } from "./styles";
 
 const modalRoot = document.getElementById("modal-root");
 
-interface Props {
+type ModalProps = {
   size?: string;
   isOpen: boolean;
   id: number | string;
@@ -16,8 +16,8 @@ interface Props {
 }
 
 
-const Modal: React.FC<Props> = (props) => {
-  const {isOpen, onClose, title, id, size, children} = props;
+const Modal: React.FC<ModalProps> = (props) => {
+  const { isOpen, onClose, title, id, size, children } = props;
   const [fadeType, setFadeType] = useState<string>();
   const background = React.createRef();
 
@@ -34,6 +34,13 @@ const Modal: React.FC<Props> = (props) => {
   useEffect(() => {
     setFadeType('out');
   }, [isOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  }, []);
 
   const transitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
     if (e.propertyName !== "opacity" || fadeType === "in") return;
@@ -59,7 +66,7 @@ const Modal: React.FC<Props> = (props) => {
     ReactDom.createPortal(
       <StyledModal
         id={id as string}
-        className={`wrapper ${props.class}`}
+        className={`wrapper ${props.class ? props.class : ''}`}
         role="dialog"
         modalSize={size}
         onTransitionEnd={transitionEnd}
@@ -71,7 +78,7 @@ const Modal: React.FC<Props> = (props) => {
             <h4 className="box-title">{title}</h4>
             <Button onClick={handleClick} className="close">
               X
-              </Button>
+            </Button>
           </div>
           <div className="box-content">{children}</div>
         </div>

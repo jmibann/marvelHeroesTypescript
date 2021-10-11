@@ -8,6 +8,7 @@ export const CardComponent = styled.div`
     `;
 
 export const ImageFrame = styled.div`
+    filter: drop-shadow(0 0 0.4rem black);
     position: relative;
     transition: transform .2s;
     &:hover {

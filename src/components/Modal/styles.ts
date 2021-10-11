@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 import { backgroundColor, textColor, themeButton } from '../../common/theme';
 
-interface ModalProps {
+type StyledModalProps = {
   modalSize: string | undefined;
   fadeType?: string | undefined;
 }
 
 
-export const StyledModal = styled.div<ModalProps>`
+export const StyledModal = styled.div<StyledModalProps>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,8 +16,8 @@ export const StyledModal = styled.div<ModalProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* opacity: 1;
-  transition: opacity linear 0.15s; */
+  opacity: 1;
+  transition: opacity linear 0.15s;
   opacity: ${props => {
     switch (props.fadeType) {
       case "in":
@@ -39,15 +39,8 @@ export const StyledModal = styled.div<ModalProps>`
 
   z-index: 2000;
   overflow-y: hidden;
-  width: ${props => {
-    switch (props.modalSize) {
-      case "lg":
-        return "800";
-      default:
-        return "480";
-    }
-  }}px;
-  margin: 40px auto;
+  width: 100%;
+  height: 100vh; 
   &.fade-in {
     opacity: 1;
     transition: opacity linear 0.15s;
@@ -73,6 +66,14 @@ export const StyledModal = styled.div<ModalProps>`
     height: 475px;
     border-radius: 10px;
     background-color: ${() => backgroundColor};
+    width: ${props => {
+    switch (props.modalSize) {
+      case "lg":
+        return "800";
+      default:
+        return "480";
+    }
+  }}px;
     box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     .box-content {
       padding:  0 24px 0 24px; 
@@ -130,5 +131,8 @@ export const Button = styled.button`
   border-width: 0px;
   background-color: ${() => themeButton};
   color: ${() => textColor};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 

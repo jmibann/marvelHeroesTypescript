@@ -50,7 +50,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ inputSearch }) => {
 
   return (
     <SearchContainer>
-      <TitleContainer> Results: {inputSearch} </TitleContainer>
+      {/* <TitleContainer> Results: {inputSearch} </TitleContainer> */}
 
       {
         searchResult &&

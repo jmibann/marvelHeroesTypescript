@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { textColor } from '../../common/theme';
+import { textColor, backgroundColor } from '../../common/theme';
 
 export const SearchContainer = styled.div`
   display: flex;
@@ -8,6 +8,7 @@ export const SearchContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: ${() => backgroundColor};
 `;
 
 export const TitleContainer = styled.p`

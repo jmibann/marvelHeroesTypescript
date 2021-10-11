@@ -8,5 +8,5 @@ export const AppContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   background-color: ${() => backgroundColor};
-  height: 100vh;
+  min-height: 100vh;
 `;
