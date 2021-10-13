@@ -14,3 +14,11 @@ export const NoComicFound = styled.div`
     justify-content: center;
     align-items: center;
 `;
+
+export const NoHeroeFound = styled.div`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+`;

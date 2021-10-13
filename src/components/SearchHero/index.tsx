@@ -4,7 +4,7 @@ import { CardsBoard, LoadingHeroes } from '../../components';
 
 import { createResource } from '../../utils';
 import { fetchSearchResult } from '../../services/API/searchResult';
-import { TitleContainer, SearchContainer } from './styles';
+import { SearchContainer } from './styles';
 import { HeroType } from '../../App';
 
 type SearchResultProps = {
@@ -18,7 +18,7 @@ type ResultType = {
 const createSearchHeroesResource =
   (keyword: string) => createResource(fetchSearchResult(keyword));;
 
-const SearchResult: React.FC<SearchResultProps> = ({ inputSearch }) => {
+const SearchHero: React.FC<SearchResultProps> = ({ inputSearch }) => {
   const [searchResult, setSearchResult] = useState<ResultType>();
 
   useEffect(() => {
@@ -50,16 +50,14 @@ const SearchResult: React.FC<SearchResultProps> = ({ inputSearch }) => {
 
   return (
     <SearchContainer>
-      {/* <TitleContainer> Results: {inputSearch} </TitleContainer> */}
-
       {
         searchResult &&
         <Suspense fallback={<LoadingHeroes />}>
           <CardsBoard heroes={searchResult} />
-        </Suspense>}
-
+        </Suspense>
+      }
     </SearchContainer>
   )
 }
 
-export default SearchResult;
+export default SearchHero;

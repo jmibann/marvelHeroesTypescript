@@ -1,23 +1,27 @@
 import Card from './Card';
 import CardsBoard from './CardsBoard';
+import SearchComic from './SearchComic';
 import ComicInfo from './ComicInfo';
 import ComicReview from './ComicReview';
 import Header from './Header';
 import Landing from './Landing';
-import LoadingSpinner from './LoadingSpinner';
+import LoadingComic from './LoadingComic';
 import LoadingHeroes from './LoadingHeroes';
+import LoadingSpinner from './LoadingSpinner';
 import Modal from './Modal';
-import SearchResult from './SearchResult';
+import SearchHero from './SearchHero';
 
 export {
   Card,
   CardsBoard,
+  SearchComic,
   ComicInfo,
   ComicReview,
   Header,
   Landing,
-  LoadingSpinner,
+  LoadingComic,
   LoadingHeroes,
+  LoadingSpinner,
   Modal,
-  SearchResult,
+  SearchHero,
 };

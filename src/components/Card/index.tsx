@@ -61,7 +61,7 @@ function Card({ hero, onClick }: Props): (JSX.Element) {
 
   return (
     <CardComponent>
-      <ImageFrame onClick={() => onClick(hero)} >
+      <ImageFrame onClick={() => onClick(hero)} aria-label='hero card' >
         <HeroImage
           src={thumbnail.path + '/portrait_fantastic.jpg'}
           onError={addDefaultSrc}

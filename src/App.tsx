@@ -7,8 +7,8 @@ import { ThemeProvider } from "styled-components";
 import {
   Header,
   Landing,
-  SearchResult,
-  ComicInfo,
+  SearchHero,
+  SearchComic,
 } from './components';
 import { createResource } from './utils';
 import { fetchRandomHeroes } from './services/API/landing';
@@ -63,9 +63,9 @@ const App: React.FC<{}> = () => {
 
         {isSearchingNothing && <Landing randomHeroesResource={randomHeroesResource} />}
 
-        {isSearchingHero && <SearchResult inputSearch={inputSearch} />}
+        {isSearchingHero && <SearchHero inputSearch={inputSearch} />}
 
-        {isSearchingComic && <ComicInfo comicId={inputSearchComic} />}
+        {isSearchingComic && <SearchComic comicId={inputSearchComic} />}
 
       </AppContainer>
     </ThemeProvider>

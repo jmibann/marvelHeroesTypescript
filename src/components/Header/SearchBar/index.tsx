@@ -7,25 +7,31 @@ import { SearchBar, Separator, Input, MagnifierContainer } from './styles';
 
 const COMIC_QUERY = 'https://www.marvel.com/comics/issue/'
 
-const getComicId = (str: string) : string  => {
+const getComicId = (str: string): string => {
   let result = str.slice(COMIC_QUERY.length).split('/').shift();
   return (result as string)
 }
 
 
 const SearchBarComponent: React.FC = () => {
-  const [favList, setFavList] = useState <(string | null)[]>([]);
+  const [favList, setFavList] = useState<(string | null)[]>([]);
   const { input, setInput, setInputComic } = useContext(InputContext);
 
   const myStorage: Storage = window.localStorage;
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) : void => {
-    if (!e.target.value.includes(COMIC_QUERY)) setInputComic('');
-    setInput(e.target.value);
-    return
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.value.includes(COMIC_QUERY)) {
+      setInputComic(getComicId(e.target.value));
+      setInput(e.target.value);
+      return;
+    } else {
+      setInputComic('');
+      setInput(e.target.value);
+      return;
+    }
   }
 
-  const onPasteHandler = (e: React.ClipboardEvent<HTMLInputElement>) : void => {
+  const onPasteHandler = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     let pastedURL: string = e.clipboardData.getData('Text');
 
     if (pastedURL.includes(COMIC_QUERY)) {
@@ -41,8 +47,8 @@ const SearchBarComponent: React.FC = () => {
     setFavList(keys.map(key => myStorage.getItem(key)).sort());
   }
 
-    return(
-      <SearchBar>
+  return (
+    <SearchBar>
       <Separator />
 
       <MagnifierContainer>
@@ -75,7 +81,7 @@ const SearchBarComponent: React.FC = () => {
 
       <Separator />
     </SearchBar>
-    )
+  )
 }
 
 export default SearchBarComponent;

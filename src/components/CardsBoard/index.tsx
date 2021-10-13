@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Column } from '../../common';
 
-import { CardsContainer, NoComicFound } from './styles';
+import { CardsContainer, NoComicFound, NoHeroeFound } from './styles';
 import { Card, Modal, ComicReview } from '../../components';
 
 import { HeroType } from '../../App';
@@ -50,11 +50,13 @@ const CardsBoard: React.FC<CardsBoardProps> = ({ heroes }) => {
           </Modal>
         )}
         {
-          heroesList && heroesList.map(hero =>
-            <Column xs='12' sm='6' md='4' lg='3' key={hero.id}>
-              <Card hero={hero} onClick={onClick} />
-            </Column>
-          )
+          heroesList.length > 0
+            ? heroesList?.map(hero =>
+              <Column xs='12' sm='6' md='4' lg='3' key={hero.id}>
+                <Card hero={hero} onClick={onClick} />
+              </Column>
+            )
+            : <NoHeroeFound>No hero found</NoHeroeFound>
         }
       </Row>
     </CardsContainer >

@@ -13,7 +13,7 @@ const LoadingHeroes: React.FC<{}> = () => {
     <>
       {skeletonCards.map(skeleton =>
         <Column xs='12' sm='6' md='4' lg='3' key={`skeleton-${skeleton}`}>
-          <SkeletonContainer>
+          <SkeletonContainer aria-label='loading card'>
             <Skeleton width={"256px"} height={"384px"} />
           </SkeletonContainer>
         </Column>

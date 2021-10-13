@@ -1,63 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { fetchComic } from '../../services/API/comicInfo';
 import { dateFormatter } from '../../utils';
 
-import { Container, Image, Details, Title, Miscelaneous, Description } from './styles';
+import {
+  ImageContainer,
+  Image,
+  Details,
+  Title,
+  Miscelaneous,
+  Description
+} from './styles';
 import { Row, Column } from '../../common';
 
-import { getWriter, getPenciler, getCoverArtist, ComicInfoFromFetch } from '../../utils';
+import {
+  getWriter,
+  getPenciler,
+  getCoverArtist,
+  ComicInfoFromFetch
+} from '../../utils';
 
 type ComicInfoComponentProps = {
-  comicId: string;
+  comicResource: {
+    read: () => ComicInfoFromFetch | Promise<ComicInfoFromFetch>;
+  }
 };
 
-const ComicInfoComponent: React.FC<ComicInfoComponentProps> = ({ comicId }) => {
+const ComicInfo: React.FC<ComicInfoComponentProps> = ({ comicResource }) => {
+  const comic = comicResource.read() as ComicInfoFromFetch;
+  const [errored, setErrored] = useState(false);
+  // const [comicInfo, setComicInfo] = useState<ComicInfoFromFetch>();
 
-  const [comicInfo, setComicInfo] = useState<ComicInfoFromFetch>();
+  // useEffect(() => {
+  //   const loadComic = async () => await fetchComic(comicId).then(comic => setComicInfo(comic));
 
-  useEffect(() => {
-    const loadComic = async () => await fetchComic(comicId).then(comic => setComicInfo(comic));
+  //   loadComic();
+  // }, [comicId]);
 
-    loadComic();
-  }, [comicId]);
-
+  const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>): (void | undefined) => {
+    if (!errored) {
+      e.preventDefault();
+      setErrored(true);
+      e.currentTarget.onerror = null;
+      e.currentTarget.src = './imageNotFoundFantastic.png'
+    }
+  }
 
   return (
-
     <Row >
       <Column xs='12' sm='6' md='5' lg='4' >
-        <Container>
-          {comicInfo ? <Image src={comicInfo.thumbnail.path + '/clean.jpg'} /> : null}
-        </Container>
+        <ImageContainer>
+          <Image
+            src={comic.thumbnail.path + '/clean.jpg'}
+            onError={addDefaultSrc}
+          />
+        </ImageContainer>
       </Column>
 
       <Column xs='12' sm='6' md='7' lg='8' backGround={'rgb(247, 248, 250)'}>
-        {comicInfo &&
-          <Details>
-            <Title>{comicInfo.title}</Title>
+        <Details>
+          <Title>{comic.title}</Title>
 
-            <Miscelaneous>Published: {dateFormatter(comicInfo.dates[0].date)}</Miscelaneous>
-            <Miscelaneous>Writer: {getWriter(comicInfo)?.join(' - ')}</Miscelaneous>
+          <Miscelaneous>Published: {dateFormatter(comic.dates[0].date)}</Miscelaneous>
+          <Miscelaneous>Writer: {getWriter(comic)?.join(' - ')}</Miscelaneous>
 
-            {getPenciler(comicInfo) &&
-              <Miscelaneous>Penciler: {getPenciler(comicInfo)?.join(' - ')}</Miscelaneous>
-            }
+          {getPenciler(comic) &&
+            <Miscelaneous>Penciler: {getPenciler(comic)?.join(' - ')}</Miscelaneous>
+          }
 
-            {getCoverArtist(comicInfo)?.length &&
-              <Miscelaneous>Cover Artist: {getCoverArtist(comicInfo)?.join(' - ')}</Miscelaneous>
-            }
+          {getCoverArtist(comic)?.length &&
+            <Miscelaneous>Cover Artist: {getCoverArtist(comic)?.join(' - ')}</Miscelaneous>
+          }
 
-            <Description>{comicInfo.description}</Description>
-          </Details>
-        }
-
+          <Description>{comic.description}</Description>
+        </Details>
       </Column>
     </Row>
   )
+
 }
 
 
-export default ComicInfoComponent;
+export default ComicInfo;
 
 

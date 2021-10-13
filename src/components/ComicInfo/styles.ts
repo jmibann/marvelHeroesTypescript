@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { textColor } from '../../common/theme';
 
-export const Container = styled.div`
+export const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +14,8 @@ export const Container = styled.div`
 export const Image = styled.img`
   border-radious: 10px;
   width: 100%;
+  width: 339px;
+  height: 521px;
 `;
 
 export const Details = styled.div`
